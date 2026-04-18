@@ -248,18 +248,33 @@
 
 @media (prefers-color-scheme: dark) {
   .ly-post-card {
-    background: rgba(23, 28, 56, 0.74);
-    border-color: rgba(179, 136, 255, 0.14);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+    background: #101522;
+    border: 1px solid rgba(143, 194, 255, 0.16);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
   }
 
-  .ly-post-card:hover {
-    border-color: rgba(179, 136, 255, 0.28);
-    box-shadow: 0 20px 40px rgba(122, 162, 255, 0.16);
+  .ly-post-card .ly-post-card__content {
+    background: #161c2c;
   }
 
-  .ly-post-card__tag {
-    color: #a8d8ff;
+  .ly-post-card .ly-post-card__tag {
+    color: #8fc2ff !important;
+  }
+
+  .ly-post-card .ly-post-card__title,
+  .ly-post-card .ly-post-card__title a,
+  .ly-post-card .ly-post-card__title a:visited,
+  .ly-post-card .ly-post-card__title a:hover,
+  .ly-post-card .ly-post-card__title a:focus {
+    color: #f4f7ff !important;
+    opacity: 1 !important;
+    text-decoration: none;
+  }
+
+  .ly-post-card .ly-post-card__meta,
+  .ly-post-card .ly-post-card__meta span {
+    color: rgba(234, 238, 255, 0.78) !important;
+    opacity: 1 !important;
   }
 }
 
