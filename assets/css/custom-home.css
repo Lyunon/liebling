@@ -162,6 +162,7 @@
   --card-gold-1: rgba(255, 215, 140, 0.16);
   --card-gold-2: rgba(255, 215, 140, 0.06);
 
+  opacity: 0;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -172,10 +173,17 @@
   box-shadow: 0 10px 24px rgba(120, 140, 255, 0.08);
   transform-style: preserve-3d;
   perspective: 1000px;
+  transform: translateY(20px);
   transition:
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ly-post-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .ly-post-card--tarot {
@@ -207,7 +215,7 @@
 }
 
 .ly-post-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   border-color: rgba(122, 162, 255, 0.32);
   box-shadow: 0 20px 40px rgba(120, 140, 255, 0.22);
 }
@@ -307,12 +315,16 @@
 }
 
 .ly-post-card:hover .ly-post-card__media {
-  transform: rotateX(1.2deg) rotateY(-1.2deg);
+  transform: rotateX(0.8deg) rotateY(-0.8deg);
 }
 
 .ly-post-card:hover .ly-post-card__media img {
   transform: scale(1.04);
   filter: brightness(1.03);
+}
+
+.ly-post-card:hover .ly-post-card__title a {
+  text-shadow: 0 0 12px rgba(168, 216, 255, 0.25);
 }
 
 .ly-post-card__content {
