@@ -48,7 +48,7 @@
                   {{#if feature_image}}
                     <img src="{{img_url feature_image size="m"}}" alt="{{title}}">
                   {{else}}
-                    <div class="ly-post-card__placeholder"></div>
+                    <img src="{{asset "images/default-thumb.jpg"}}" alt="기본 썸네일">
                   {{/if}}
                 </a>
 
@@ -74,11 +74,6 @@
           <p>아직 게시물이 없습니다.</p>
         {{/if}}
       {{/get}}
-      {{#if feature_image}}
-        <img src="{{img_url feature_image size="m"}}" alt="{{title}}">
-      {{else}}
-        <img src="{{asset "images/default-thumb.jpg"}}" alt="default">
-      {{/if}}
     </div>
   </section>
 
