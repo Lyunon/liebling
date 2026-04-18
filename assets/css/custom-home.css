@@ -17,8 +17,8 @@
 .ly-hero__grid {
   position: relative;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 40px;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 24px;
   align-items: center;
 }
 
@@ -54,7 +54,7 @@
 .ly-hero__visual {
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: end;
   min-height: 520px;
 }
