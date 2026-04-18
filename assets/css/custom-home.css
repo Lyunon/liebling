@@ -213,9 +213,12 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
+  align-items: start;
 }
 
 .ly-post-card {
+  display: flex;
+  flex-direction: cloumn;
   position: relative;
   overflow: hidden;
   border-radius: 20px;
@@ -256,10 +259,12 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transform: scale(1.05);
 }
 
 .ly-post-card__content {
   display: block;
+  flex: none;
   padding: 18px 18px 20px;
   background: rgba(255, 255, 255, 0.92);
 }
