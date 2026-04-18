@@ -39,16 +39,10 @@
         <p>최신 글을 한눈에 확인해 보세요.</p>
       </div>
 
-    {{#get "posts" include="tags,authors" limit="6" as |latest|}}
-      {{#if latest}}
-        <div class="l-post-grid">
-          {{#foreach latest}}
-            {{> "article-card"}}
-          {{/foreach}}
-        </div>
-      {{else}}
-        <p>아직 게시물이 없습니다.</p>
-      {{/if}}
+    {{#get "posts" include="tags,authors" limit="6"}}
+      <div class="l-post-grid">
+        {{> "loop" posts=posts}}
+      </div>
     {{/get}}
   </section>
 
