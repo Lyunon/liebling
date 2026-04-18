@@ -300,6 +300,7 @@
 
 .ly-post-card__content {
   padding: 18px 18px 20px;
+  background: red !important;
 }
 
 .ly-post-card__tag {
