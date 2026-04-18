@@ -8,9 +8,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(168, 216, 255, 0.35), transparent 28%),
-    radial-gradient(circle at 80% 15%, rgba(179, 136, 255, 0.18), transparent 22%);
+  background: radial-gradient(
+    circle,
+    rgba(168,216,255,0.42),
+    rgba(179,136,255,0.22) 60%,
+    transparent 75%
+  );
   pointer-events: none;
 }
 
@@ -170,6 +173,25 @@
   box-shadow: 0 20px 40px rgba(120, 140, 255, 0.22);
 }
 
+.ly-post-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(168, 216, 255, 0.06),
+    rgba(179, 136, 255, 0.04)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ly-post-card:hover::before {
+  opacity: 1;
+}
+
 .ly-post-card::after {
   content: "";
   position: absolute;
@@ -188,6 +210,19 @@
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: rgba(168, 216, 255, 0.12);
+}
+
+.ly-post-card__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 60%,
+    rgba(0,0,0,0.35)
+  );
 }
 
 .ly-post-card__media img {
@@ -251,8 +286,9 @@
 @media (prefers-color-scheme: dark) {
   body {
     background:
-      radial-gradient(circle at 20% 0%, rgba(122,162,255,0.18), transparent 30%),
-      radial-gradient(circle at 80% 10%, rgba(179,136,255,0.16), transparent 24%),
+      radial-gradient(circle at 15% 0%, rgba(122,162,255,0.18), transparent 30%),
+    radial-gradient(circle at 85% 10%, rgba(179,136,255,0.16), transparent 24%),
+    radial-gradient(circle at 50% 80%, rgba(168,216,255,0.08), transparent 40%),
       linear-gradient(180deg, #151a33 0%, #0d1020 100%);
   }
 
