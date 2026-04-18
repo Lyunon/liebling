@@ -7,10 +7,12 @@
 {{> header}}
 
 <main class="main-wrap">
+
+  <!-- HERO -->
   <section class="ly-hero">
     <div class="l-wrapper">
       <div class="ly-hero__grid">
-        <div class="ly-hero__text" data-animate="fade-down">
+        <div class="ly-hero__text">
           <p class="ly-hero__kicker">Virtual Streamer</p>
           <h1 class="ly-hero__title">륜온</h1>
           <p class="ly-hero__desc">
@@ -25,59 +27,39 @@
           </div>
         </div>
 
-        <div class="ly-hero__visual" data-animate="fade-up">
+        <div class="ly-hero__visual">
           <img src="{{asset "images/lyunon.png"}}" alt="륜온 캐릭터 반신 이미지">
         </div>
       </div>
     </div>
   </section>
 
+  <!-- FEATURED (여기 수정됨) -->
   <section class="ly-section ly-section--featured">
     <div class="l-wrapper">
+
       {{#get "posts" filter="tag:featured-home" limit="1" include="tags,authors"}}
         {{#if posts}}
+
           {{#foreach posts}}
-            <article class="ly-featured-card {{#if primary_tag}}ly-featured-card--{{primary_tag.slug}}{{/if}}">
-              <a class="ly-featured-card__media" href="{{url}}">
-                {{#if feature_image}}
-                  <img src="{{img_url feature_image size="xl"}}" alt="{{title}}">
-                {{else}}
-                  <img src="{{asset "images/default-thumb.png"}}" alt="기본 썸네일">
-                {{/if}}
-              </a>
-
-              <div class="ly-featured-card__content">
-                {{#if primary_tag}}
-                  <span class="ly-featured-card__tag">{{primary_tag.name}}</span>
-                {{/if}}
-
-                <h2 class="ly-featured-card__title">
-                  <a href="{{url}}">{{title}}</a>
-                </h2>
-
-                {{#if custom_excerpt}}
-                  <p class="ly-featured-card__desc">{{custom_excerpt}}</p>
-                {{else}}
-                  <p class="ly-featured-card__desc">{{excerpt words="24"}}</p>
-                {{/if}}
-
-                <div class="ly-featured-card__meta">
-                  <span>{{date published_at format="YYYY.MM.DD"}}</span>
-                  <span>·</span>
-                  <span>{{reading_time}}</span>
-                </div>
-
-                <div class="ly-featured-card__actions">
-                  <a href="{{url}}" class="m-button filled">대표 글 보기</a>
-                </div>
-              </div>
-            </article>
+            {{> "featured-card"}}
           {{/foreach}}
+
+        {{else}}
+
+          {{#get "posts" limit="1" include="tags,authors"}}
+            {{#foreach posts}}
+              {{> "featured-card"}}
+            {{/foreach}}
+          {{/get}}
+
         {{/if}}
       {{/get}}
+
     </div>
   </section>
 
+  <!-- POSTS -->
   <section class="ly-section">
     <div class="l-wrapper">
       <div class="ly-section__head">
@@ -123,34 +105,4 @@
     </div>
   </section>
 
-  <section class="ly-section ly-section--tags">
-    <div class="l-wrapper">
-      <div class="ly-section__head">
-        <h2>Oracle Links</h2>
-        <p>자주 가는 공간로 바로 이동할 수 있어요.</p>
-      </div>
-
-      <div class="ly-tag-grid">
-        <a class="ly-tag-card" href="/tag/tarot/">
-          <strong>🔮 Tarot</strong>
-          <span>타로 관련</span>
-        </a>
-
-        <a class="ly-tag-card" href="/tag/broadcast/">
-          <strong>🎥 Broadcast</strong>
-          <span>방송 관련</span>
-        </a>
-
-        <a class="ly-tag-card" href="/tag/notice/">
-          <strong>📜 Notice</strong>
-          <span>공지</span>
-        </a>
-
-        <a class="ly-tag-card" href="https://chzzk.naver.com/b588ed6529498d3ba9600fd99c9455c1" target="_blank" rel="noopener">
-          <strong>⚡ Chzzk</strong>
-          <span>치지직 채널 이동</span>
-        </a>
-      </div>
-    </div>
-  </section>
 </main>
