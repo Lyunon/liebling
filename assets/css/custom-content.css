@@ -138,3 +138,94 @@
     border-radius: 18px;
   }
 }
+
+.tarot-page {
+  display: grid;
+  gap: 34px;
+}
+
+.tarot-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.tarot-summary__item {
+  padding: 18px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(140, 170, 255, 0.12);
+  box-shadow: 0 10px 22px rgba(120, 140, 255, 0.05);
+}
+
+.tarot-summary__item strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.tarot-notice-card {
+  padding: 22px 20px;
+  border-radius: 22px;
+  background: linear-gradient(
+    135deg,
+    rgba(168, 216, 255, 0.08),
+    rgba(179, 136, 255, 0.06)
+  );
+  border: 1px solid rgba(140, 170, 255, 0.14);
+  box-shadow: 0 14px 28px rgba(120, 140, 255, 0.06);
+}
+
+.tarot-notice-card ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.tarot-notice-card li + li {
+  margin-top: 0.55em;
+}
+
+.tarot-price-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.tarot-price-card {
+  padding: 24px 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(140, 170, 255, 0.14);
+  box-shadow: 0 12px 24px rgba(120, 140, 255, 0.06);
+}
+
+.tarot-price-card h3 {
+  margin: 0 0 12px;
+}
+
+.tarot-price-card p {
+  margin: 0 0 0.9em;
+}
+
+.tarot-price-card p:last-child {
+  margin-bottom: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tarot-summary__item,
+  .tarot-notice-card,
+  .tarot-price-card {
+    background:
+      linear-gradient(135deg, rgba(143, 194, 255, 0.06), rgba(179, 136, 255, 0.06)),
+      rgba(22, 26, 44, 0.88);
+    border-color: rgba(179, 136, 255, 0.14);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+  }
+}
+
+@media (max-width: 980px) {
+  .tarot-summary,
+  .tarot-price-grid {
+    grid-template-columns: 1fr;
+  }
+}
