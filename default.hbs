@@ -194,9 +194,24 @@
     </script>
 
     <script>
-      document.querySelectorAll('.ly-post-card').forEach((el, i) => {
-        el.style.transitionDelay = `${i * 0.06}s`;
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const cards = document.querySelectorAll('.ly-post-card');
+            cards.forEach((card, i) => {
+              setTimeout(() => {
+                card.classList.add('is-visible');
+              }, i * 60);
+            });
+            observer.disconnect();
+          }
+        });
       });
+
+      const firstCard = document.querySelector('.ly-post-card');
+      if (firstCard) {
+        observer.observe(firstCard);
+      }
     </script>
     
     {{ghost_foot}}
