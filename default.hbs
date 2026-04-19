@@ -232,9 +232,10 @@
       const ctx = canvas.getContext('2d');
       let particles = [];
       let type = 'snow';
-
+    
       const forced = localStorage.getItem('force-season');
       const month = new Date().getMonth() + 1;
+    
       if (forced) {
         type = forced;
       } else {
@@ -252,16 +253,20 @@
       window.addEventListener('resize', resize);
       resize();
     
+      function randomBetween(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+    
       function createParticle() {
         if (type === 'rain') {
           return {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            size: 2,
-            speedY: Math.random() * 4 + 4,
-            speedX: 0,
-            drift: 0,
-            color: 'rgba(180,220,255,0.5)'
+            len: randomBetween(10, 16),
+            speedY: randomBetween(4.5, 7),
+            speedX: randomBetween(-0.15, 0.15),
+            alpha: randomBetween(0.28, 0.5),
+            color: '180,220,255'
           };
         }
     
@@ -269,11 +274,15 @@
           return {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            size: Math.random() * 4 + 2,
-            speedY: Math.random() * 0.6 + 0.2,
-            speedX: (Math.random() - 0.5) * 0.6,
-            drift: Math.random() * 0.02 + 0.005,
-            color: 'rgba(255,255,255,0.9)'
+            size: randomBetween(2, 5),
+            speedY: randomBetween(0.25, 0.8),
+            speedX: randomBetween(-0.35, 0.35),
+            drift: randomBetween(0.006, 0.02),
+            wobble: Math.random() * Math.PI * 2,
+            alpha: randomBetween(0.55, 0.95),
+            color: '255,255,255',
+            rotation: 0,
+            rotationSpeed: randomBetween(-0.01, 0.01)
           };
         }
     
@@ -281,72 +290,163 @@
           return {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            size: Math.random() * 6 + 4,
-            speedY: Math.random() * 0.8 + 0.3,
-            speedX: (Math.random() - 0.5) * 0.8,
-            drift: Math.random() * 0.03 + 0.01,
-            color: 'rgba(255,190,220,0.9)'
+            size: randomBetween(8, 14),
+            speedY: randomBetween(0.22, 0.55),   // 느리게
+            speedX: randomBetween(-0.45, 0.45),
+            drift: randomBetween(0.01, 0.025),
+            wobble: Math.random() * Math.PI * 2,
+            alpha: randomBetween(0.65, 0.95),
+            color: Math.random() > 0.5 ? '255,190,220' : '255,215,235',
+            rotation: Math.random() * Math.PI * 2,
+            rotationSpeed: randomBetween(-0.02, 0.02)
           };
         }
     
         return {
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          size: Math.random() * 7 + 5,
-          speedY: Math.random() * 1 + 0.4,
-          speedX: (Math.random() - 0.5) * 0.7,
-          drift: Math.random() * 0.025 + 0.008,
-          color: 'rgba(255,150,80,0.85)'
+          size: randomBetween(10, 16),
+          speedY: randomBetween(0.28, 0.65),    // 느리게
+          speedX: randomBetween(-0.5, 0.5),
+          drift: randomBetween(0.01, 0.022),
+          wobble: Math.random() * Math.PI * 2,
+          alpha: randomBetween(0.68, 0.95),
+          color: Math.random() > 0.5 ? '255,155,80' : '220,100,40',
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: randomBetween(-0.018, 0.018)
         };
       }
     
-      function init(count = 80) {
+      function init() {
+        const count =
+          type === 'rain' ? 90 :
+          type === 'snow' ? 75 :
+          type === 'sakura' ? 42 :
+          36;
+    
         particles = [];
         for (let i = 0; i < count; i++) {
           particles.push(createParticle());
         }
       }
     
-      function drawParticle(p) {
+      function drawRain(p) {
         ctx.beginPath();
+        ctx.strokeStyle = `rgba(${p.color}, ${p.alpha})`;
+        ctx.lineWidth = 1.2;
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + p.speedX * 4, p.y + p.len);
+        ctx.stroke();
+      }
     
-        if (type === 'rain') {
-          ctx.strokeStyle = p.color;
-          ctx.lineWidth = 1.5;
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p.x, p.y + 10);
-          ctx.stroke();
-          return;
+      function drawSnow(p) {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    
+      function drawSakura(p) {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        ctx.scale(1, 0.92);
+    
+        ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+    
+        const s = p.size / 2.4;
+    
+        // 4장 꽃잎 느낌
+        for (let i = 0; i < 4; i++) {
+          ctx.save();
+          ctx.rotate((Math.PI / 2) * i);
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.bezierCurveTo(s * 0.4, -s * 1.2, s * 1.2, -s * 1.1, 0, -s * 2);
+          ctx.bezierCurveTo(-s * 1.2, -s * 1.1, -s * 0.4, -s * 1.2, 0, 0);
+          ctx.fill();
+          ctx.restore();
         }
     
-        ctx.fillStyle = p.color;
-        ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 245, 250, ${Math.min(p.alpha, 0.9)})`;
+        ctx.beginPath();
+        ctx.arc(0, 0, s * 0.38, 0, Math.PI * 2);
         ctx.fill();
+    
+        ctx.restore();
       }
     
-      function update() {
+      function drawLeaf(p) {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+    
+        ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+        const w = p.size * 0.7;
+        const h = p.size;
+    
+        ctx.beginPath();
+        ctx.moveTo(0, -h * 0.55);
+        ctx.bezierCurveTo(w, -h * 0.25, w, h * 0.35, 0, h * 0.55);
+        ctx.bezierCurveTo(-w, h * 0.35, -w, -h * 0.25, 0, -h * 0.55);
+        ctx.fill();
+    
+        ctx.strokeStyle = `rgba(120, 70, 20, ${p.alpha * 0.7})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, -h * 0.5);
+        ctx.lineTo(0, h * 0.5);
+        ctx.stroke();
+    
+        ctx.restore();
+      }
+    
+      function drawParticle(p) {
+        if (type === 'rain') return drawRain(p);
+        if (type === 'snow') return drawSnow(p);
+        if (type === 'sakura') return drawSakura(p);
+        if (type === 'leaf') return drawLeaf(p);
+      }
+    
+      function updateParticle(p) {
+        p.y += p.speedY;
+    
+        if (type === 'rain') {
+          p.x += p.speedX;
+        } else {
+          p.wobble += p.drift;
+          p.x += p.speedX + Math.sin(p.wobble) * 0.45;
+          p.rotation += p.rotationSpeed;
+        }
+    
+        if (p.y > canvas.height + 30) {
+          Object.assign(p, createParticle(), {
+            y: -30,
+            x: Math.random() * canvas.width
+          });
+        }
+    
+        if (p.x < -40) p.x = canvas.width + 40;
+        if (p.x > canvas.width + 40) p.x = -40;
+      }
+    
+      function loop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-        particles.forEach(p => {
-          p.y += p.speedY;
-          p.x += p.speedX + Math.sin(p.y * p.drift);
-    
-          if (p.y > canvas.height + 20) {
-            p.y = -20;
-            p.x = Math.random() * canvas.width;
-          }
-    
-          if (p.x < -30) p.x = canvas.width + 30;
-          if (p.x > canvas.width + 30) p.x = -30;
-    
+        for (const p of particles) {
+          updateParticle(p);
           drawParticle(p);
-        });
+        }
     
-        requestAnimationFrame(update);
+        requestAnimationFrame(loop);
       }
     
-      init(type === 'rain' ? 100 : 80);
-      update();
+      init();
+      loop();
     });
     </script>
 
