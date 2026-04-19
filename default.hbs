@@ -152,17 +152,24 @@
 
     {{!-- Ghost outputs important scripts and data with this tag --}}
     <script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const cards = document.querySelectorAll('.ly-post-card');
+            cards.forEach((card, i) => {
+              setTimeout(() => {
+                card.classList.add('is-visible');
+              }, i * 60);
+            });
+            observer.disconnect();
+          }
+        });
       });
-    });
 
-    document.querySelectorAll('.ly-post-card').forEach(el => {
-      observer.observe(el);
-    });
+      const firstCard = document.querySelector('.ly-post-card');
+      if (firstCard) {
+        observer.observe(firstCard);
+      }
     </script>
     
     <script>
@@ -191,27 +198,6 @@
           card.style.setProperty('--rotateY', '0deg');
         });
       });
-    </script>
-
-    <script>
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const cards = document.querySelectorAll('.ly-post-card');
-            cards.forEach((card, i) => {
-              setTimeout(() => {
-                card.classList.add('is-visible');
-              }, i * 60);
-            });
-            observer.disconnect();
-          }
-        });
-      });
-
-      const firstCard = document.querySelector('.ly-post-card');
-      if (firstCard) {
-        observer.observe(firstCard);
-      }
     </script>
     
     {{ghost_foot}}
