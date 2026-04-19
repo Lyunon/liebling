@@ -23,18 +23,18 @@ body.season-on .season-overlay::after {
 /* spring */
 body.season-spring .season-overlay::before {
   background-image:
-    radial-gradient(circle, rgba(255, 210, 230, 0.85) 0 6px, transparent 7px),
-    radial-gradient(circle, rgba(255, 190, 220, 0.7) 0 5px, transparent 6px),
-    radial-gradient(circle, rgba(255, 230, 240, 0.75) 0 4px, transparent 5px);
-  background-size: 220px 220px, 280px 280px, 180px 180px;
-  animation: seasonSpringFall 18s linear infinite;
+    radial-gradient(circle, rgba(255, 190, 220, 0.95) 0 10px, transparent 11px),
+    radial-gradient(circle, rgba(255, 210, 230, 0.82) 0 8px, transparent 9px),
+    radial-gradient(circle, rgba(255, 230, 240, 0.78) 0 6px, transparent 7px);
+  background-size: 140px 140px, 200px 200px, 260px 260px;
+  animation: seasonSpringFall 12s linear infinite;
 }
 
 body.season-spring .season-overlay::after {
   background-image:
-    radial-gradient(circle, rgba(255, 220, 235, 0.35) 0 7px, transparent 8px);
-  background-size: 320px 320px;
-  animation: seasonSpringFall2 24s linear infinite;
+    radial-gradient(circle, rgba(255, 200, 225, 0.55) 0 12px, transparent 13px);
+  background-size: 220px 220px;
+  animation: seasonSpringFall2 16s linear infinite;
 }
 
 /* summer */
