@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&display=swap');
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(168,216,255,0.05), transparent),
+    radial-gradient(circle at 80% 70%, rgba(179,136,255,0.05), transparent);
+}
+
 .ly-hero {
   position: relative;
   padding: 56px 0 28px;
@@ -68,12 +78,23 @@
 .ly-hero__visual::before {
   content: "";
   position: absolute;
-  width: 280px;
-  height: 280px;
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(168,216,255,0.34), rgba(179,136,255,0.14) 60%, transparent 75%);
-  filter: blur(12px);
-  z-index: 0;
+  inset: 0;
+  margin: auto;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(
+    circle,
+    rgba(168, 216, 255, 0.35),
+    rgba(179, 136, 255, 0.25) 55%,
+    transparent 75%
+  );
+  filter: blur(60px);
+  animation: auraPulse 6s ease-in-out infinite;
+}
+
+@keyframes auraPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
 }
 
 .ly-hero__visual img {
@@ -191,28 +212,28 @@
 }
 
 .ly-post-card--tarot {
-  --card-glow-1: rgba(179, 136, 255, 0.18);
-  --card-glow-2: rgba(122, 162, 255, 0.08);
+  --card-glow-1: rgba(179, 136, 255, 0.22);
+  --card-glow-2: rgba(122, 162, 255, 0.10);
   --card-border: rgba(179, 136, 255, 0.24);
   --card-gold-1: rgba(255, 220, 160, 0.22);
   --card-gold-2: rgba(255, 215, 140, 0.08);
 }
 
 .ly-post-card--notice {
-  --card-glow-1: rgba(143, 194, 255, 0.16);
-  --card-glow-2: rgba(168, 216, 255, 0.08);
+  --card-glow-1: rgba(143, 194, 255, 0.22);
+  --card-glow-2: rgba(168, 216, 255, 0.10);
   --card-border: rgba(143, 194, 255, 0.22);
 }
 
 .ly-post-card--broadcast {
-  --card-glow-1: rgba(122, 162, 255, 0.16);
-  --card-glow-2: rgba(168, 216, 255, 0.06);
+  --card-glow-1: rgba(122, 162, 255, 0.22);
+  --card-glow-2: rgba(168, 216, 255, 0.08);
   --card-border: rgba(122, 162, 255, 0.22);
 }
 
 .ly-post-card--yugioh {
-  --card-glow-1: rgba(255, 214, 102, 0.14);
-  --card-glow-2: rgba(179, 136, 255, 0.05);
+  --card-glow-1: rgba(255, 214, 102, 0.22);
+  --card-glow-2: rgba(179, 136, 255, 0.08);
   --card-border: rgba(255, 214, 102, 0.22);
   --card-gold-1: rgba(255, 220, 160, 0.22);
   --card-gold-2: rgba(255, 215, 140, 0.08);
@@ -232,19 +253,14 @@
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 20px;
   pointer-events: none;
-  z-index: 1;
   background: radial-gradient(
-    180px circle at var(--x, 50%) var(--y, 50%),
-    var(--card-glow-1),
-    var(--card-glow-2) 35%,
-    transparent 65%
+    circle at var(--x, 50%) var(--y, 50%),
+    color-mix(in srgb, var(--card-glow-1) 40%, transparent),
+    transparent 60%
   );
   opacity: 0;
-  transition:
-    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.3s ease;
 }
 
 .ly-post-card:hover::before {
@@ -687,17 +703,25 @@
 }
 
 .gh-content blockquote {
-  margin: 2em 0;
-  padding: 1.1em 1.2em 1.1em 1.4em;
-  border-left: 3px solid rgba(122, 162, 255, 0.5);
+  position: relative;
+  padding: 1.4em 1.6em;
+  border-radius: 16px;
   background: linear-gradient(
     135deg,
-    rgba(168, 216, 255, 0.08),
-    rgba(179, 136, 255, 0.05)
+    rgba(168, 216, 255, 0.10),
+    rgba(179, 136, 255, 0.06)
   );
-  border-radius: 14px;
-  font-size: 0.98em;
-  line-height: 1.85;
+  border-left: 3px solid rgba(179, 136, 255, 0.6);
+  font-style: italic;
+}
+
+.gh-content blockquote::before {
+  content: "✧";
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  font-size: 18px;
+  opacity: 0.6;
 }
 
 .gh-content blockquote p:last-child {
