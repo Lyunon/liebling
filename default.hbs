@@ -197,6 +197,26 @@
           card.style.setProperty('--rotateX', '0deg');
           card.style.setProperty('--rotateY', '0deg');
         });
+
+        card.addEventListener('click', e => {
+          const rect = card.getBoundingClientRect();
+          const ripple = document.createElement('span');
+
+          ripple.className = 'ly-post-card__ripple';
+          ripple.style.left = `${e.clientX - rect.left}px`;
+          ripple.style.top = `${e.clientY - rect.top}px`;
+
+          card.appendChild(ripple);
+
+          ripple.addEventListener('animationend', () => {
+            ripple.remove();
+          });
+        });
+
+        card.addEventListener('click', () => {
+          card.classList.add('is-clicked');
+          setTimeout(() => card.classList.remove('is-clicked'), 220);
+        });
       });
     </script>
     
