@@ -224,6 +224,8 @@
       });
     </script>
 
+    let snowAccum = [];
+    
     <script>
     document.addEventListener('DOMContentLoaded', () => {
       const canvas = document.getElementById('season-canvas');
@@ -370,6 +372,10 @@
     
         particles = [];
         ripples = [];
+
+        if (type === 'snow') {
+          snowAccum = new Array(canvas.width).fill(0);
+        }
     
         for (let i = 0; i < count; i++) {
           particles.push(createParticle());
@@ -537,6 +543,7 @@
 
           if (type === 'snow') {
             p.twinklePhase += p.twinkle;
+            const ground = canvas.height - 8;
           }
         }
     
@@ -544,6 +551,17 @@
           Object.assign(p, createParticle(), {
             y: -40,
             x: Math.random() * canvas.width
+
+            if (p.y > ground) {
+              const x = Math.floor(p.x);
+          
+              if (snowAccum[x] < 12) {
+                snowAccum[x] += p.size * 0.15;
+              }
+          
+              p.y = -20;
+              p.x = Math.random() * canvas.width;
+            }
           });
         }
     
@@ -557,7 +575,30 @@
         for (const p of particles) {
           updateParticle(p);
           drawParticle(p);
+
+          if (type === 'snow') {
+            drawSnowAccum();
+          }
         }
+
+      function drawSnowAccum() {
+        ctx.save();
+      
+        ctx.fillStyle = 'rgba(255,255,255,0.08)';
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height);
+      
+        for (let x = 0; x < canvas.width; x += 2) {
+          const h = snowAccum[x] || 0;
+          ctx.lineTo(x, canvas.height - h);
+        }
+      
+        ctx.lineTo(canvas.width, canvas.height);
+        ctx.closePath();
+        ctx.fill();
+      
+        ctx.restore();
+      }
     
         if (type === 'rain') {
           updateRipples();
