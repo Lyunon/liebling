@@ -272,18 +272,61 @@
         }
     
         if (type === 'snow') {
+          const layer = Math.random();
+        
+          if (layer < 0.55) {
+            // 작은 눈
+            return {
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              size: randomBetween(1.8, 3.2),
+              speedY: randomBetween(0.18, 0.45),
+              speedX: randomBetween(-0.22, 0.22),
+              drift: randomBetween(0.004, 0.012),
+              wobble: Math.random() * Math.PI * 2,
+              alpha: randomBetween(0.45, 0.8),
+              color: '255,255,255',
+              rotation: 0,
+              rotationSpeed: randomBetween(-0.006, 0.006),
+              twinkle: randomBetween(0.002, 0.008),
+              twinklePhase: Math.random() * Math.PI * 2
+            };
+          }
+        
+          if (layer < 0.88) {
+            // 중간 눈
+            return {
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              size: randomBetween(3.2, 5.4),
+              speedY: randomBetween(0.28, 0.72),
+              speedX: randomBetween(-0.3, 0.3),
+              drift: randomBetween(0.006, 0.018),
+              wobble: Math.random() * Math.PI * 2,
+              alpha: randomBetween(0.58, 0.92),
+              color: '245,250,255',
+              rotation: 0,
+              rotationSpeed: randomBetween(-0.01, 0.01),
+              twinkle: randomBetween(0.004, 0.012),
+              twinklePhase: Math.random() * Math.PI * 2
+            };
+          }
+        
+          // 큰 눈
           return {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            size: randomBetween(2, 5),
-            speedY: randomBetween(0.25, 0.8),
-            speedX: randomBetween(-0.35, 0.35),
-            drift: randomBetween(0.006, 0.02),
+            size: randomBetween(5.4, 7.8),
+            speedY: randomBetween(0.2, 0.52),
+            speedX: randomBetween(-0.4, 0.4),
+            drift: randomBetween(0.008, 0.02),
             wobble: Math.random() * Math.PI * 2,
-            alpha: randomBetween(0.55, 0.95),
-            color: '255,255,255',
+            alpha: randomBetween(0.45, 0.78),
+            color: '230,240,255',
             rotation: 0,
-            rotationSpeed: randomBetween(-0.01, 0.01)
+            rotationSpeed: randomBetween(-0.012, 0.012),
+            twinkle: randomBetween(0.003, 0.01),
+            twinklePhase: Math.random() * Math.PI * 2
           };
         }
     
@@ -321,7 +364,7 @@
       function init() {
         const count =
           type === 'rain' ? 95 :
-          type === 'snow' ? 75 :
+          type === 'snow' ? 95 :
           type === 'sakura' ? 42 :
           34;
     
@@ -346,10 +389,28 @@
         ctx.save();
         ctx.translate(p.x, p.y);
         ctx.rotate(p.rotation);
-        ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+      
+        const pulse = 0.88 + Math.sin(p.twinklePhase) * 0.12;
+        const alpha = Math.max(0.18, p.alpha * pulse);
+      
+        // 바깥 흐림
         ctx.beginPath();
+        ctx.fillStyle = `rgba(${p.color}, ${alpha * 0.18})`;
+        ctx.arc(0, 0, p.size * 0.9, 0, Math.PI * 2);
+        ctx.fill();
+      
+        // 본체
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${p.color}, ${alpha})`;
         ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
         ctx.fill();
+      
+        // 중심 하이라이트
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255, ${Math.min(alpha, 0.95)})`;
+        ctx.arc(-p.size * 0.08, -p.size * 0.08, p.size / 5.5, 0, Math.PI * 2);
+        ctx.fill();
+      
         ctx.restore();
       }
     
@@ -473,6 +534,10 @@
           p.wobble += p.drift;
           p.x += p.speedX + Math.sin(p.wobble) * 0.45;
           p.rotation += p.rotationSpeed;
+
+          if (type === 'snow') {
+            p.twinklePhase += p.twinkle;
+          }
         }
     
         if (p.y > canvas.height + 40) {
