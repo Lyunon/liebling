@@ -227,13 +227,13 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
       const canvas = document.getElementById('season-canvas');
-      const ctx = canvas.getContext('2d');
+      if (!canvas) return;
     
+      const ctx = canvas.getContext('2d');
       let particles = [];
       let type = 'snow';
     
       const month = new Date().getMonth() + 1;
-    
       if (month >= 3 && month <= 5) type = 'sakura';
       else if (month >= 6 && month <= 8) type = 'rain';
       else if (month >= 9 && month <= 11) type = 'leaf';
@@ -248,42 +248,6 @@
       resize();
     
       function createParticle() {
-        const base = {
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 6 + 4,
-          speedY: Math.random() * 1 + 0.5,
-          speedX: (Math.random() - 0.5) * 1
-        };
-    
-        if (type === 'snow') {
-          return {
-            ...base,
-            size: Math.random() * 4 + 2,
-            speedY: Math.random() * 0.6 + 0.2,
-            color: 'rgba(255,255,255,0.9)'
-          };
-        }
-    
-        if (type === 'sakura') {
-          return {
-            ...base,
-            size: Math.random() * 6 + 4,
-            speedY: Math.random() * 0.8 + 0.3,
-            p.x += Math.sin(p.y * 0.01),
-            color: 'rgba(255,190,220,0.9)'
-          };
-        }
-    
-        if (type === 'leaf') {
-          return {
-            ...base,
-            size: Math.random() * 7 + 5,
-            speedY: Math.random() * 1 + 0.4,
-            color: 'rgba(255,150,80,0.85)'
-          };
-        }
-    
         if (type === 'rain') {
           return {
             x: Math.random() * canvas.width,
@@ -291,12 +255,47 @@
             size: 2,
             speedY: Math.random() * 4 + 4,
             speedX: 0,
+            drift: 0,
             color: 'rgba(180,220,255,0.5)'
           };
         }
+    
+        if (type === 'snow') {
+          return {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 4 + 2,
+            speedY: Math.random() * 0.6 + 0.2,
+            speedX: (Math.random() - 0.5) * 0.6,
+            drift: Math.random() * 0.02 + 0.005,
+            color: 'rgba(255,255,255,0.9)'
+          };
+        }
+    
+        if (type === 'sakura') {
+          return {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 6 + 4,
+            speedY: Math.random() * 0.8 + 0.3,
+            speedX: (Math.random() - 0.5) * 0.8,
+            drift: Math.random() * 0.03 + 0.01,
+            color: 'rgba(255,190,220,0.9)'
+          };
+        }
+    
+        return {
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 7 + 5,
+          speedY: Math.random() * 1 + 0.4,
+          speedX: (Math.random() - 0.5) * 0.7,
+          drift: Math.random() * 0.025 + 0.008,
+          color: 'rgba(255,150,80,0.85)'
+        };
       }
     
-      function init(count = 60) {
+      function init(count = 80) {
         particles = [];
         for (let i = 0; i < count; i++) {
           particles.push(createParticle());
@@ -308,6 +307,7 @@
     
         if (type === 'rain') {
           ctx.strokeStyle = p.color;
+          ctx.lineWidth = 1.5;
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p.x, p.y + 10);
           ctx.stroke();
@@ -324,12 +324,15 @@
     
         particles.forEach(p => {
           p.y += p.speedY;
-          p.x += p.speedX;
+          p.x += p.speedX + Math.sin(p.y * p.drift);
     
-          if (p.y > canvas.height) {
-            p.y = -10;
+          if (p.y > canvas.height + 20) {
+            p.y = -20;
             p.x = Math.random() * canvas.width;
           }
+    
+          if (p.x < -30) p.x = canvas.width + 30;
+          if (p.x > canvas.width + 30) p.x = -30;
     
           drawParticle(p);
         });
@@ -337,7 +340,7 @@
         requestAnimationFrame(update);
       }
     
-      init(80);
+      init(type === 'rain' ? 100 : 80);
       update();
     });
     </script>
