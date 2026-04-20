@@ -15,7 +15,6 @@
     <link rel="preload" href="{{asset "js/manifest.js"}}" as="script" />
     <link rel="preload" href="{{asset "js/vendor.js"}}" as="script" />
     <link rel="preload" href="{{asset "js/app.js"}}" as="script" />
-    <link rel="stylesheet" href="{{asset "css/custom-content.css"}}" />
 
     {{!-- This #block helper will try to preload page-specific assets --}}
     {{{block "preload"}}}
@@ -80,6 +79,8 @@
     {{!-- This #block helper will pull data from the hero partial
     to inject styles of the hero image to make it responsive --}}
     {{{block "herobackground"}}}
+
+    <link rel="stylesheet" href="{{asset "css/custom-content.css"}}" />
 
     {{!-- This tag outputs SEO meta+structured data and other important settings --}}
     {{ghost_head}}
