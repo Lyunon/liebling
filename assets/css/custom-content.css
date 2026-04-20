@@ -299,3 +299,72 @@
   }
 }
 
+.tarot-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tarot-card {
+  position: absolute;
+  width: 120px;
+  height: 190px;
+  border-radius: 14px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)),
+    rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 20px 40px rgba(120, 140, 255, 0.08),
+    inset 0 0 20px rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  opacity: 0.4;
+}
+
+/* 위치 */
+.tarot-card--1 {
+  top: 20%;
+  right: 18%;
+  transform: rotate(-12deg);
+}
+
+.tarot-card--2 {
+  top: 35%;
+  right: 8%;
+  transform: rotate(6deg);
+}
+
+.tarot-card--3 {
+  top: 50%;
+  right: 22%;
+  transform: rotate(18deg);
+}
+
+/* hover 반응 */
+.tarot-hero:hover .tarot-card--1 {
+  transform: rotate(-6deg) translateY(-6px);
+  opacity: 0.6;
+}
+
+.tarot-hero:hover .tarot-card--2 {
+  transform: rotate(10deg) translateY(-10px);
+  opacity: 0.7;
+}
+
+.tarot-hero:hover .tarot-card--3 {
+  transform: rotate(22deg) translateY(-4px);
+  opacity: 0.6;
+}
+
+.tarot-card::before {
+  content: "✦";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  color: rgba(255,255,255,0.35);
+}
