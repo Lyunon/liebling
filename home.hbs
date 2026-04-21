@@ -65,7 +65,7 @@
   <section class="ly-section ly-section--featured">
     <div class="l-wrapper">
 
-      {{#get "posts" filter="tag:featured-home" limit="1" include="tags,authors"}}
+      {{#get "posts" filter="tag:featured-home" limit="2" include="tags,authors"}}
         {{#if posts}}
 
           {{#foreach posts}}
@@ -74,7 +74,7 @@
 
         {{else}}
 
-          {{#get "posts" limit="2" include="tags,authors"}}
+          {{#get "posts" limit="1" include="tags,authors"}}
             {{#foreach posts}}
               {{> "featured-card"}}
             {{/foreach}}
