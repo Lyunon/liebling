@@ -639,6 +639,10 @@
         return slider.querySelector('.home-featured-slider__slide.is-active .home-featured-slider__progress-bar');
       }
     
+      function getProgressWrap() {
+        return slider.querySelector('.home-featured-slider__slide.is-active .home-featured-slider__progress');
+      }
+    
       function showSlide(index) {
         slides.forEach((slide, i) => {
           slide.classList.toggle('is-active', i === index);
@@ -702,13 +706,13 @@
         isPaused = true;
     
         const progressBar = getProgressBar();
-        if (!progressBar) return;
+        const progressWrap = getProgressWrap();
+        if (!progressBar || !progressWrap) return;
     
         const elapsed = Date.now() - startedAt;
         remaining = Math.max(0, remaining - elapsed);
     
-        const progressWrap = slider.querySelector('.home-featured-slider__slide.is-active .home-featured-slider__progress');
-        const wrapWidth = progressWrap ? progressWrap.offsetWidth : 1;
+        const wrapWidth = progressWrap.offsetWidth || 1;
         const computedWidth = parseFloat(window.getComputedStyle(progressBar).width) || 0;
     
         pausedPercent = Math.max(0, Math.min(100, (computedWidth / wrapWidth) * 100));
