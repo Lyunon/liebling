@@ -715,3 +715,259 @@
     grid-template-columns: 1fr;
   }
 }
+
+.ly-rule-page {
+  width: min(920px, 100%);
+  margin: 0 auto;
+  padding: 20px 0 52px;
+}
+
+.ly-rule-hero {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+  padding: 34px 28px;
+  border-radius: 28px;
+  border: 1px solid rgba(139, 181, 255, 0.18);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(138, 182, 255, 0.20), transparent 38%),
+    radial-gradient(circle at 80% 100%, rgba(180, 146, 255, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025));
+  box-shadow:
+    0 20px 50px rgba(10, 18, 38, 0.18),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+}
+
+.ly-rule-hero::before {
+  content: "";
+  position: absolute;
+  inset: auto -80px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(146, 191, 255, 0.20), transparent 65%);
+  pointer-events: none;
+}
+
+.ly-rule-eyebrow {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8fb7ff;
+}
+
+.ly-rule-hero h1 {
+  margin: 0 0 14px;
+  font-size: clamp(30px, 4.2vw, 46px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.ly-rule-desc {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.82);
+}
+
+.ly-rule-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.ly-rule-summary-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 18px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 12px 26px rgba(12, 16, 30, 0.10);
+}
+
+.ly-rule-summary-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(143,183,255,0.25), rgba(174,145,255,0.18));
+  font-size: 16px;
+}
+
+.ly-rule-summary-item strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.ly-rule-summary-item p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.74);
+}
+
+.ly-rule-card {
+  position: relative;
+  margin-bottom: 18px;
+  padding: 24px 22px 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.03));
+  box-shadow:
+    0 16px 38px rgba(10, 18, 38, 0.14),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+}
+
+.ly-rule-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 24px 0 0 24px;
+  background: linear-gradient(180deg, #86b7ff, #b091ff);
+  opacity: 0.9;
+}
+
+.ly-rule-card-head {
+  margin-bottom: 14px;
+}
+
+.ly-rule-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  background: rgba(143, 183, 255, 0.14);
+  border: 1px solid rgba(143, 183, 255, 0.22);
+  color: #9bc1ff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.ly-rule-card h2 {
+  margin: 0;
+  font-size: clamp(22px, 2.2vw, 28px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.ly-rule-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ly-rule-list li {
+  position: relative;
+  margin: 0;
+  padding: 13px 0 13px 20px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.88);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.ly-rule-list li:first-child {
+  border-top: 0;
+  padding-top: 8px;
+}
+
+.ly-rule-list li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 13px;
+  color: #8fb7ff;
+  font-size: 12px;
+}
+
+.ly-rule-note,
+.ly-rule-contact {
+  margin-top: 20px;
+  padding: 20px 22px;
+  border-radius: 20px;
+}
+
+.ly-rule-note {
+  background:
+    linear-gradient(135deg, rgba(136, 176, 255, 0.10), rgba(171, 141, 255, 0.08));
+  border: 1px solid rgba(143,183,255,0.16);
+}
+
+.ly-rule-contact {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.ly-rule-note strong,
+.ly-rule-contact strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 17px;
+}
+
+.ly-rule-note p,
+.ly-rule-contact p {
+  margin: 0;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.82);
+}
+
+.ly-rule-contact a {
+  color: #9fc5ff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(159, 197, 255, 0.35);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.ly-rule-contact a:hover {
+  color: #c6dcff;
+  border-color: rgba(198, 220, 255, 0.7);
+}
+
+@media (max-width: 767px) {
+  .ly-rule-page {
+    padding: 8px 0 40px;
+  }
+
+  .ly-rule-hero {
+    padding: 26px 20px;
+    border-radius: 22px;
+  }
+
+  .ly-rule-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .ly-rule-summary-item {
+    border-radius: 18px;
+    padding: 16px 16px;
+  }
+
+  .ly-rule-card {
+    padding: 20px 18px 18px;
+    border-radius: 20px;
+  }
+
+  .ly-rule-note,
+  .ly-rule-contact {
+    padding: 18px 18px;
+    border-radius: 18px;
+  }
+}
