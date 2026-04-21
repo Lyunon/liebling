@@ -1229,14 +1229,6 @@ html[data-theme='light'] .gh-content pre {
 
 .home-featured-slider {
   position: relative;
-}
-
-.home-featured-slider__track {
-  position: relative;
-}
-
-.home-featured-slider {
-  position: relative;
   overflow: hidden;
 }
 
@@ -1318,26 +1310,24 @@ html[data-theme='light'] .gh-content pre {
   }
 }
 
+.home-featured-slider {
+  position: relative;
+  overflow: hidden;
+}
+
 .home-featured-slider__progress {
-  width: 100%;
-  height: 4px;
-  margin-top: 12px;
+  height: 3px;
+  margin-top: 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(122, 158, 255, 0.12);
   overflow: hidden;
 }
 
 .home-featured-slider__progress-bar {
-  display: block;
-  width: 0%;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #7a9eff, #aebfff);
-}
-
-.home-featured-slider {
-  position: relative;
-  overflow: hidden;
+  background: linear-gradient(90deg, rgba(122,158,255,0.95), rgba(179,136,255,0.95));
+  box-shadow: 0 0 10px rgba(122,158,255,0.25);
 }
 
 .home-featured-slider__track {
