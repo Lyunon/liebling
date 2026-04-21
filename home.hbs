@@ -68,9 +68,7 @@
         {{#if posts}}
           <div class="home-featured-slider">
 
-            <div class="home-featured-slider__progress">
-              <span class="home-featured-slider__progress-bar"></span>
-            </div>
+
             
             <button class="home-featured-slider__nav home-featured-slider__nav--prev" type="button" aria-label="이전 슬라이드">‹</button>
 
@@ -94,6 +92,10 @@
                   {{#foreach posts}}
                     <div class="home-featured-slider__slide {{#if @first}}is-active{{/if}}">
                       {{> "featured-card"}}
+                    
+                      <div class="home-featured-slider__progress">
+                        <span class="home-featured-slider__progress-bar"></span>
+                      </div>
                     </div>
                   {{/foreach}}
                 </div>
