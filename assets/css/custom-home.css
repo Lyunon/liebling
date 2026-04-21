@@ -1237,12 +1237,10 @@ html[data-theme='light'] .gh-content pre {
 
 .home-featured-slider__slide {
   display: none;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
 }
 
 .home-featured-slider__slide.is-active {
-  display: grid;
+  display: block;
 }
 
 .home-featured-slider__nav {
@@ -1270,10 +1268,6 @@ html[data-theme='light'] .gh-content pre {
 }
 
 @media (max-width: 1240px) {
-  .home-featured-slider__slide {
-    grid-template-columns: 1fr;
-  }
-
   .home-featured-slider__nav--prev {
     left: 8px;
   }
