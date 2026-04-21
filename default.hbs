@@ -629,7 +629,7 @@
     
       let current = 0;
       let timer;
-      const duration = 5000; // 5초
+      const duration = 5000;
     
       function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -665,8 +665,12 @@
         timer = setInterval(goNext, duration);
       }
     
-      function resetAuto() {
+      function stopAuto() {
         clearInterval(timer);
+      }
+    
+      function resetAuto() {
+        stopAuto();
         startAuto();
       }
     
@@ -680,13 +684,14 @@
         resetAuto();
       });
     
+      // ⭐ 여기 추가 (핵심)
+      slider.addEventListener('mouseenter', stopAuto);
+      slider.addEventListener('mouseleave', startAuto);
+    
       showSlide(current);
       startProgress();
       startAuto();
     });
-    
-    slider.addEventListener('mouseenter', () => clearInterval(timer));
-    slider.addEventListener('mouseleave', startAuto);
     </script>
     
     {{ghost_foot}}
