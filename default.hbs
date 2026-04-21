@@ -623,9 +623,8 @@
       const slides = slider.querySelectorAll('.home-featured-slider__slide');
       const prevBtn = slider.querySelector('.home-featured-slider__nav--prev');
       const nextBtn = slider.querySelector('.home-featured-slider__nav--next');
-      const progressBar = slider.querySelector('.home-featured-slider__progress-bar');
     
-      if (!slides.length || !progressBar || slides.length <= 1) return;
+      if (slides.length <= 1) return;
     
       let current = 0;
       let timer = null;
@@ -636,26 +635,13 @@
       let isPaused = false;
       let pausedPercent = 0;
     
+      function getProgressBar() {
+        return slider.querySelector('.home-featured-slider__slide.is-active .home-featured-slider__progress-bar');
+      }
+    
       function showSlide(index) {
         slides.forEach((slide, i) => {
           slide.classList.toggle('is-active', i === index);
-        });
-      }
-    
-      function resetProgressVisual() {
-        progressBar.style.transition = 'none';
-        progressBar.style.width = '0%';
-      }
-    
-      function startProgress(ms, fromPercent = 0) {
-        progressBar.style.transition = 'none';
-        progressBar.style.width = `${fromPercent}%`;
-      
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            progressBar.style.transition = `width ${ms}ms linear`;
-            progressBar.style.width = '100%';
-          });
         });
       }
     
@@ -666,13 +652,28 @@
         }
       }
     
+      function startProgress(ms, fromPercent = 0) {
+        const progressBar = getProgressBar();
+        if (!progressBar) return;
+    
+        progressBar.style.transition = 'none';
+        progressBar.style.width = `${fromPercent}%`;
+    
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            progressBar.style.transition = `width ${ms}ms linear`;
+            progressBar.style.width = '100%';
+          });
+        });
+      }
+    
       function scheduleNext(ms, fromPercent = 0) {
         clearAutoTimer();
         startedAt = Date.now();
         remaining = ms;
-      
+    
         startProgress(ms, fromPercent);
-      
+    
         timer = setTimeout(() => {
           goNext();
         }, ms);
@@ -682,45 +683,51 @@
         clearAutoTimer();
         current = (current + 1) % slides.length;
         showSlide(current);
+        pausedPercent = 0;
         remaining = duration;
-        scheduleNext(duration);
+        scheduleNext(duration, 0);
       }
     
       function goPrev() {
         clearAutoTimer();
         current = (current - 1 + slides.length) % slides.length;
         showSlide(current);
+        pausedPercent = 0;
         remaining = duration;
-        scheduleNext(duration);
+        scheduleNext(duration, 0);
       }
     
       function pauseAuto() {
         if (isPaused) return;
         isPaused = true;
-      
+    
+        const progressBar = getProgressBar();
+        if (!progressBar) return;
+    
         const elapsed = Date.now() - startedAt;
         remaining = Math.max(0, remaining - elapsed);
-      
-        const sliderWidth = slider.querySelector('.home-featured-slider__progress').offsetWidth || 1;
+    
+        const progressWrap = slider.querySelector('.home-featured-slider__slide.is-active .home-featured-slider__progress');
+        const wrapWidth = progressWrap ? progressWrap.offsetWidth : 1;
         const computedWidth = parseFloat(window.getComputedStyle(progressBar).width) || 0;
-      
-        pausedPercent = Math.max(0, Math.min(100, (computedWidth / sliderWidth) * 100));
-      
+    
+        pausedPercent = Math.max(0, Math.min(100, (computedWidth / wrapWidth) * 100));
+    
         progressBar.style.transition = 'none';
         progressBar.style.width = `${pausedPercent}%`;
-      
+    
         clearAutoTimer();
       }
     
       function resumeAuto() {
         if (!isPaused) return;
         isPaused = false;
-      
+    
         if (remaining <= 0) {
           goNext();
           return;
         }
-      
+    
         scheduleNext(remaining, pausedPercent);
       }
     
@@ -738,7 +745,7 @@
       slider.addEventListener('mouseleave', resumeAuto);
     
       showSlide(current);
-      scheduleNext(duration);
+      scheduleNext(duration, 0);
     });
     </script>
     
