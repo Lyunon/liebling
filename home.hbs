@@ -83,6 +83,11 @@
           {{#get "posts" limit="3" include="tags,authors"}}
             {{#if posts}}
               <div class="home-featured-slider">
+
+                <div class="home-featured-slider__progress">
+                  <span class="home-featured-slider__progress-bar"></span>
+                </div>
+                
                 <button class="home-featured-slider__nav home-featured-slider__nav--prev" type="button" aria-label="이전 슬라이드">‹</button>
 
                 <div class="home-featured-slider__track">
