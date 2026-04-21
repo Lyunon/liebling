@@ -1235,12 +1235,53 @@ html[data-theme='light'] .gh-content pre {
   position: relative;
 }
 
-.home-featured-slider__slide {
-  display: none;
+.home-featured-slider {
+  position: relative;
+  overflow: hidden;
 }
 
+.home-featured-slider__track {
+  position: relative;
+  height: 100%;
+}
+
+/* 기본 상태 */
+.home-featured-slider__slide {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0;
+  transform: scale(1.04);
+
+  transition:
+    opacity 0.7s ease,
+    transform 1.2s ease;
+
+  pointer-events: none;
+}
+
+/* 활성 상태 */
 .home-featured-slider__slide.is-active {
-  display: block;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* 이전 슬라이드 자연스럽게 사라짐 */
+.home-featured-slider__slide:not(.is-active) {
+  z-index: 1;
+}
+
+/* 카드 자체도 살짝 부드럽게 */
+.home-featured-slider__slide .featured-card {
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* 호버 시 살짝 떠오르는 느낌 */
+.home-featured-slider__slide:hover .featured-card {
+  transform: translateY(-4px);
 }
 
 .home-featured-slider__nav {
