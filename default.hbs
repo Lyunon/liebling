@@ -634,6 +634,7 @@
       let startedAt = 0;
       let remaining = duration;
       let isPaused = false;
+      let pausedPercent = 0;
     
       function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -646,9 +647,10 @@
         progressBar.style.width = '0%';
       }
     
-      function startProgress(ms) {
-        resetProgressVisual();
-    
+      function startProgress(ms, fromPercent = 0) {
+        progressBar.style.transition = 'none';
+        progressBar.style.width = `${fromPercent}%`;
+      
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             progressBar.style.transition = `width ${ms}ms linear`;
@@ -664,13 +666,13 @@
         }
       }
     
-      function scheduleNext(ms) {
+      function scheduleNext(ms, fromPercent = 0) {
         clearAutoTimer();
         startedAt = Date.now();
         remaining = ms;
-    
-        startProgress(ms);
-    
+      
+        startProgress(ms, fromPercent);
+      
         timer = setTimeout(() => {
           goNext();
         }, ms);
@@ -695,27 +697,31 @@
       function pauseAuto() {
         if (isPaused) return;
         isPaused = true;
-    
+      
         const elapsed = Date.now() - startedAt;
         remaining = Math.max(0, remaining - elapsed);
-    
-        const computedWidth = window.getComputedStyle(progressBar).width;
+      
+        const sliderWidth = slider.querySelector('.home-featured-slider__progress').offsetWidth || 1;
+        const computedWidth = parseFloat(window.getComputedStyle(progressBar).width) || 0;
+      
+        pausedPercent = Math.max(0, Math.min(100, (computedWidth / sliderWidth) * 100));
+      
         progressBar.style.transition = 'none';
-        progressBar.style.width = computedWidth;
-    
+        progressBar.style.width = `${pausedPercent}%`;
+      
         clearAutoTimer();
       }
     
       function resumeAuto() {
         if (!isPaused) return;
         isPaused = false;
-    
+      
         if (remaining <= 0) {
           goNext();
           return;
         }
-    
-        scheduleNext(remaining);
+      
+        scheduleNext(remaining, pausedPercent);
       }
     
       prevBtn?.addEventListener('click', () => {
